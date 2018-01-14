@@ -1,0 +1,116 @@
+{% extends 'CharlotteStaffBundle::layout.html.twig' %}
+
+{% trans_default_domain 'CharlotteStaffBundle' %}
+
+{% block content %}
+    {% for message in app.session.flashbag.get('valid') %}
+        <br /><br />
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <br /><br />
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Attention ! </strong>{{ message }}
+        </div>
+    {% endfor %}
+    <div class="bs-callout bs-callout-info col-md-6">
+        <h3>Créer la totalité des roles d'une entité (table)</h3>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+            {{ form_rest(form) }}
+            <button type="submit" class="btn btn-default">Ok</button>
+        {{ form_end(form) }}
+    </div>
+
+    <div class="bs-callout bs-callout-info col-md-6">
+        <h3>Créer un role spécifique</h3>
+        {{ form_start(OthersroleForm) }}
+        {{ form_errors(OthersroleForm) }}
+            {{ form_rest(OthersroleForm) }}
+            <button type="submit" class="btn btn-default">Ok</button>
+        {{ form_end(OthersroleForm) }}
+    </div>
+    {% if repository is defined and repository is not empty %}
+    <div class="col-md-12">
+        <h3>Chaque champ coché = génération d'un role</h3>
+        <form action="{{ path("CharlotteStaffBundle_role_create") }}" method="post">
+            <table class="table table-hover">
+                    <tr>
+                        <th>#</th>
+                        <th>Commentaire</th>
+                        <th>Entité</th>
+                        <th>Champ</th>
+                        <th>Type</th>
+                        <th>Nullable</th>
+                    </tr>
+                    {% for field in repository.fieldMappings %}
+                    <tr {% if field.fieldName == "id" or field.fieldName == "enabled" or field.fieldName == "archived" %}class="danger"{% endif %}>
+                        <td>
+                            <input type="checkbox" name="{{ entity }}~{{ field.fieldName }}~{% if field.options.comment is defined %}{{ field.options.comment }}{% endif %}"
+                            {% if field.fieldName != "id" and field.fieldName != "enabled" and field.fieldName != "archived" %}
+                                checked=checked
+                            {% endif %}
+                            />
+                        </td>
+                        <td>
+
+                            {% if field.options.comment is defined %}
+                                {{ field.options.comment }}
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {{ field.fieldName }}
+                        </td>
+                        <td>
+                            {{ field.columnName }}
+                        </td>
+                        <td>
+                            {{ field.type }}
+                        </td>
+                        <td>
+                            {% if field.nullable is defined %}
+                                Oui
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% for field in repository.associationMappings %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="{{ entity }}~{{ field.fieldName }}~Jointure_{{ entity }}-{{ field.fieldName }}"
+                            />
+                        </td>
+                        <td>
+                            Jointure_{{ entity }}-{{ field.fieldName }}
+                        </td>
+                        <td>
+                            {{ field.fieldName }}
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            {{ field.type }}
+                        </td>
+                        <td>
+                            {% if field.nullable is defined %}
+                                Oui
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </table>
+            <button type="submit" class="btn btn-default">Valider</button>
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}

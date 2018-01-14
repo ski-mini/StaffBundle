@@ -1,0 +1,227 @@
+{% extends 'CharlotteStaffBundle::layout.html.twig' %}
+
+{% trans_default_domain 'CharlotteStaffBundle' %}
+
+{% block content %}
+    <h3>Modification du groupe de role : {{ team.name }}</h3>
+    {{ form_start(TeamListForm) }}
+    {{ form_errors(TeamListForm) }}
+        {{ form_widget(TeamListForm.teamId, { value: team.id }) }}
+        {{ form_rest(TeamListForm) }}
+        <button type="submit" class="btn btn-default" id="confirmExtends">Ok</button>
+    {{ form_end(TeamListForm) }}
+    <form action="{{ path("CharlotteStaffBundle_team_update") }}" method="post">
+        <input type="hidden" name="team" value="{{ team.name }}" />
+        {% for typekey, type in team.allteamroles %}
+            <h4>{{ typekey }}</h4>
+            {% if typekey == "ACL" or typekey == "CREATE" or typekey == "SMS" or typekey == "MAIL" %}
+                <table class="table table-hover">
+                    <tr>
+                        <th style="width:30%;">Nom</th>
+                        <th style="width:40%;">Commentaire</th>
+                        <th style="width:15%;">Oui</th>
+                        <th style="width:15%;">Non</th>
+                    </tr>
+                    {% for role, value in type %}
+                        <tr>
+                            <td>
+                                ROLE_{{ typekey }}_{{ role }}
+                            </td>
+                            <td>
+                                {{ value.comment }}
+                                <input type="hidden" name="role[ROLE_{{ typekey }}_{{ role }}]" value="{{ value.value }}" />
+                                <input type="hidden" name="new[ROLE_{{ typekey }}_{{ role }}]" value="{{ value.value }}" />
+                            </td>
+                            <td>
+                                <input type="radio" name="ROLE_{{ typekey }}_{{ role }}" data-value="77"
+                                    {% if value.value == 77 %}
+                                        checked=checked
+                                    {% endif %}
+                                />
+                            </td>
+                            <td>
+                                <input type="radio" name="ROLE_{{ typekey }}_{{ role }}" data-value="00"
+                                    {% if value.value == 00 %}
+                                        checked=checked
+                                    {% endif %}
+                                />
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <table class="table table-hover">
+                    <tr>
+                        <th style="width:30%;">Nom</th>
+                        <th style="width:40%;">Commentaire</th>
+                        <th style="width:5%;">Voir</th>
+                        <th style="width:5%;">Modifier</th>
+                        <th style="width:5%;">Supprimer</th>
+                        <th style="width:5%;">Voir le sien</th>
+                        <th style="width:5%;">Modifier le sien</th>
+                        <th style="width:5%;">Supprimer le sien</th>
+                    </tr>
+                    {% for role, value in type %}
+                        <tr>
+                            <td>
+                                ROLE_{{ typekey }}_{{ role }}
+                            </td>
+                            <td>
+                                {{ value.comment }}
+                                <input type="hidden" name="role[ROLE_{{ typekey }}_{{ role }}]" value="{{ value.value }}" />
+                                <input type="hidden" name="new[ROLE_{{ typekey }}_{{ role }}]" value="{{ value.value }}" />
+                            </td>
+                            <td>
+                                <input type="checkbox" name="ROLE_{{ typekey }}_{{ role }}" data-value="40"
+                                    {% if value.value > 7 %}
+                                        checked=checked
+                                    {% endif %}
+                                    {% if value.value > 47 %}
+                                        disabled=disabled
+                                    {% endif %}
+                                />
+                            </td>
+                            <td>
+                                <input type="checkbox" name="ROLE_{{ typekey }}_{{ role }}" data-value="60"
+                                    {% if value.value > 47 %}
+                                        checked=checked
+                                    {% endif %}
+                                    {% if value.value == 77 %}
+                                        disabled=disabled
+                                    {% endif %}
+                                />
+                            </td>
+                            <td>
+                                <input type="checkbox" name="ROLE_{{ typekey }}_{{ role }}" data-value="70"
+                                    {% if value.value == 77 %}
+                                        checked=checked
+                                    {% endif %}
+                                />
+                            </td>
+                            <td>
+                                <input type="checkbox" name="ROLE_{{ typekey }}_{{ role }}" data-value="04"
+                                    {% if value.value > 0 %}
+                                        checked=checked
+                                    {% endif %}
+                                    {% if value.value > 7 %}
+                                        disabled=disabled
+                                    {% endif %}
+                                />
+                            </td>
+                            <td>
+                                <input type="checkbox" name="ROLE_{{ typekey }}_{{ role }}" data-value="06"
+                                    {% if value.value > 4 and value.value != 44 %}
+                                        checked=checked
+                                    {% endif %}
+                                    {% if value.value >= 66 %}
+                                        disabled=disabled
+                                    {% endif %}
+                                />
+                            </td>
+                            <td>
+                                <input type="checkbox" name="ROLE_{{ typekey }}_{{ role }}" data-value="07"
+                                    {% if value.value >= 7 and (value.value != 44 and value.value != 46 and value.value != 66) %}
+                                        checked=checked
+                                    {% endif %}
+                                    {% if value.value == 77 %}
+                                        disabled=disabled
+                                    {% endif %}
+                                />
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-default">Valider</button>
+    </form>
+    <script type="text/javascript">
+        $("input[type='checkbox']").click(function() {
+            var e = $(this);
+            var role = e.attr('name');
+
+            if(e.is(':checked')) {
+                if(e.data('value') == '40') {
+                    $("input[name='"+role+"'][data-value='04']").attr('disabled', 'disabled').prop('checked', true);
+                }
+                else if(e.data('value') == '60') {
+                    $("input[name='"+role+"'][data-value='06']").attr('disabled', 'disabled').prop('checked', true);
+                    $("input[name='"+role+"'][data-value='40']").attr('disabled', 'disabled').prop('checked', true);
+                    $("input[name='"+role+"'][data-value='04']").attr('disabled', 'disabled').prop('checked', true);
+                }
+                else if(e.data('value') == '70') {
+                    $("input[name='"+role+"'][data-value='07']").attr('disabled', 'disabled').prop('checked', true);
+                    $("input[name='"+role+"'][data-value='06']").attr('disabled', 'disabled').prop('checked', true);
+                    $("input[name='"+role+"'][data-value='60']").attr('disabled', 'disabled').prop('checked', true);
+                    $("input[name='"+role+"'][data-value='40']").attr('disabled', 'disabled').prop('checked', true);
+                    $("input[name='"+role+"'][data-value='04']").attr('disabled', 'disabled').prop('checked', true);
+                }
+                else if(e.data('value') == '04') {
+                    $("input[name='"+role+"'][data-value='06']").removeAttr('disabled');
+                }
+                else if(e.data('value') == '06') {
+                    $("input[name='"+role+"'][data-value='07']").removeAttr('disabled');
+                }
+            }
+            else{
+                if(e.data('value') == '70') {
+                    $("input[name='"+role+"'][data-value='07']").removeAttr('disabled');
+                    $("input[name='"+role+"'][data-value='60']").removeAttr('disabled');
+                }
+                else if(e.data('value') == '60') {
+                    $("input[name='"+role+"'][data-value='07']").removeAttr('disabled');
+                    $("input[name='"+role+"'][data-value='06']").removeAttr('disabled');
+                    $("input[name='"+role+"'][data-value='40']").removeAttr('disabled');
+                }
+                else if(e.data('value') == '40') {
+                    $("input[name='"+role+"'][data-value='04']").removeAttr('disabled');
+                }
+                else if(e.data('value') == '07' && !$("input[name='"+role+"'][data-value='60']").is(':checked')) {
+                    $("input[name='"+role+"'][data-value='06']").removeAttr('disabled');
+                }
+                else if(e.data('value') == '06' && !$("input[name='"+role+"'][data-value='40']").is(':checked')) {
+                    $("input[name='"+role+"'][data-value='04']").removeAttr('disabled');
+                    $("input[name='"+role+"'][data-value='07']").attr('disabled', 'disabled').prop('checked', false);
+                }
+                else if(e.data('value') == '06') {
+                    $("input[name='"+role+"'][data-value='07']").attr('disabled', 'disabled').prop('checked', false);
+                }
+                else if(e.data('value') == '04') {
+                    $("input[name='"+role+"'][data-value='07']").attr('disabled', 'disabled').prop('checked', false);
+                    $("input[name='"+role+"'][data-value='06']").attr('disabled', 'disabled').prop('checked', false);
+                }
+            }
+            rightcalcul(role);
+        });
+
+        $("input[type='radio']").click(function() {
+            var e = $(this);
+            var role = e.attr('name');
+
+            $("input[name='new["+role+"]']").val(e.data('value'));
+
+        });
+
+        function rightcalcul(role){
+            var rightself = 0;
+            var right = 0;
+
+            $("input[name='"+role+"']:checked").each(function() {
+                val = parseInt($(this).data('value'));
+                if(val < 10) {
+                    if(val > rightself)
+                        rightself = val;
+                }
+                else {
+                    if(val > right)
+                        right = val;
+                }
+            });
+            right = right+rightself;
+            if(right < 10)
+                right = "0"+right;
+
+            $("input[name='new["+role+"]']").val(right);
+        }
+    </script>
+{% endblock %}

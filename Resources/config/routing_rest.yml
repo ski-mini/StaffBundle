@@ -1,0 +1,76 @@
+
+
+commercialschedule:
+  type: rest
+  resource: "CharlotteStaffBundle:CommercialscheduleRest"
+  name_prefix:  api_commercialschedule
+
+contracttype:
+  type: rest
+  resource: "CharlotteStaffBundle:ContracttypeRest"
+  name_prefix:  api_contracttype
+
+role:
+  type: rest
+  resource: "CharlotteStaffBundle:RoleRest"
+  name_prefix:  api_role
+
+serviceoffice:
+  type: rest
+  resource: "CharlotteStaffBundle:ServiceofficeRest"
+  name_prefix:  api_serviceoffice
+
+maritalstatus:
+  type: rest
+  resource: "CharlotteStaffBundle:MaritalstatusRest"
+  name_prefix:  api_maritalstatus
+
+medicalexamination:
+  type: rest
+  resource: "CharlotteStaffBundle:MedicalexaminationRest"
+  name_prefix:  api_medicalexamination
+
+planning:
+  type: rest
+  resource: "CharlotteStaffBundle:PlanningRest"
+  name_prefix:  api_planning
+
+publicholiday:
+  type: rest
+  resource: "CharlotteStaffBundle:PublicholidayRest"
+  name_prefix:  api_publicholiday
+
+staff:
+  type: rest
+  resource: "CharlotteStaffBundle:StaffRest"
+  name_prefix:  api_staff
+
+staffcolor:
+  type: rest
+  resource: "CharlotteStaffBundle:StaffcolorRest"
+  name_prefix:  api_staffcolor
+
+stafffunction:
+  type: rest
+  resource: "CharlotteStaffBundle:StafffunctionRest"
+  name_prefix:  api_stafffunction
+
+vacation:
+  type: rest
+  resource: "CharlotteStaffBundle:VacationRest"
+  name_prefix:  api_vacation
+
+vacationtype:
+  type: rest
+  resource: "CharlotteStaffBundle:VacationtypeRest"
+  name_prefix:  api_vacationtype
+
+weekcomment:
+  type: rest
+  resource: "CharlotteStaffBundle:WeekcommentRest"
+  name_prefix:  api_weekcomment
+
+weektype:
+  type: rest
+  resource: "CharlotteStaffBundle:WeektypeRest"
+  name_prefix:  api_weektype

@@ -1,0 +1,37 @@
+<div class="well well-lg">
+    <h3>Rôle {{ roledescription.name }} <small><i>{{ roledescription.description }}</i></small></h3>
+    <br/>
+    <h4>Service possédant le rôle<h4>
+    {% for team in teamuser %}
+        <blockquote>
+            <p>
+                {{ team.name }}
+                {% for role in team.roles %}
+                    {% if role[:-3] == roledescription.name %}
+                        <footer>{{ role }} {% if %}{% endif %}</footer>
+                    {% endif %}
+                {% endfor %}
+            </p>
+        </blockquote>
+    {% else %}
+        <small>Aucun service trouvé</small>
+    {% endfor %}
+
+    <br/>
+
+    <h4>Utilisateur possédant le rôle</h4>
+    {% for staff in staffuser %}
+        <blockquote>
+            <p>
+                {{ staff.username }}
+                {% for role in staff.roles %}
+                    {% if role[:-3] == roledescription.name %}
+                        <footer>{{ role }} {% if %}{% endif %}</footer>
+                    {% endif %}
+                {% endfor %}
+            </p>
+        </blockquote>
+    {% else %}
+        <small>Aucun utilisateur trouvé</small>
+    {% endfor %}
+</div>

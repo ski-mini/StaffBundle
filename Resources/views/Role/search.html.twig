@@ -1,0 +1,14 @@
+{% extends 'CharlotteStaffBundle::layout.html.twig' %}
+
+{% trans_default_domain 'CharlotteStaffBundle' %}
+
+{% block content %}
+    <h3>Rechercher un rôle</h3>
+    <div class="form-group has-feedback has-feedback-left search">
+      <div class="input-group col-md-12">
+        <i class="fa fa-search form-control-feedback"></i>
+        <input type="text" class="form-control" id="search" placeholder="Rechercher" />
+      </div>
+    </div>
+    <div id="result"></div>
+{% endblock %}

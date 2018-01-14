@@ -1,0 +1,15 @@
+{% extends 'CharlotteStaffBundle::layout.html.twig' %}
+
+{% trans_default_domain 'CharlotteStaffBundle' %}
+
+{% block content %}
+    <div class="bs-callout bs-callout-info">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+
+
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

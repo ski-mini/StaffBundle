@@ -1,0 +1,66 @@
+{% extends 'CharlotteStaffBundle::layout.html.twig' %}
+
+{% trans_default_domain 'CharlotteStaffBundle' %}
+
+{% block content %}
+    {% for message in app.session.flashbag.get('valid') %}
+        <br /><br />
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('error') %}
+        <br /><br />
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Attention ! </strong>{{ message }}
+        </div>
+    {% endfor %}
+
+    <h3>Administration</h3>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="{{ path('CharlotteStaffBundle_role_new') }}">Création de rôle</a></h3>
+        </div>
+        <div class="panel-body">
+            Créer un rôle spécifique ou la totalité des rôles d'une entité doctrine. Le rôle sera assigné directement au groupe administrateur avec la permission maximale.
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="{{ path('CharlotteStaffBundle_role_search') }}">Modification d'un rôle</a></h3>
+        </div>
+        <div class="panel-body">
+            Rechercher un rôle, voir qui le possède et le modifier.
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="{{ path('CharlotteStaffBundle_role_staff') }}">Modification d'un utilisateur</a></h3>
+        </div>
+        <div class="panel-body">
+            En selectionnant un utilisateur, on trouve la liste des groupes auxquel il appartient ainsi que ses rôles spécifiques directement éditable.
+        </div>
+    </div>
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="{{ path('CharlotteStaffBundle_team') }}">Création/Modification d'un groupe de rôle</a></h3>
+        </div>
+        <div class="panel-body">
+            Créer un groupe d'utilisateur ou modifier ce dernier en accédant à la liste des rôles.
+        </div>
+    </div>
+
+    <form action="{{ path('CharlotteStaffBundle_team_resetall') }}" method="post">
+        <input type="hidden" value="1" name="team" />
+        <input type="hidden" value="77" name="rights" />
+        <button class="btn btn-default">Reset admin 77</button>
+    </form>
+
+
+{% endblock %}

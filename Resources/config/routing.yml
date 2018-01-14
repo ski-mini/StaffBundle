@@ -1,0 +1,68 @@
+CharlotteStaffBundle_role:
+    path:  /role
+    defaults: { _controller: CharlotteStaffBundle:Role:index }
+    requirements:
+        methods:  GET
+
+CharlotteStaffBundle_role_new:
+    path:  /role/new
+    defaults: { _controller: CharlotteStaffBundle:Role:new }
+    requirements:
+        methods:  GET|POST
+
+CharlotteStaffBundle_role_edit:
+    path:  /role/edit
+    defaults: { _controller: CharlotteStaffBundle:Role:edit }
+    requirements:
+        methods:  GET|POST
+
+CharlotteStaffBundle_role_search:
+    path:  /role/search
+    defaults: { _controller: CharlotteStaffBundle:Role:search }
+    requirements:
+        methods:  GET|POST
+    options:
+        expose: true
+
+CharlotteStaffBundle_role_create:
+    path:  /role/create
+    defaults: { _controller: CharlotteStaffBundle:Role:create }
+    requirements:
+        methods:  POST
+
+CharlotteStaffBundle_role_staff:
+    path:  /role/staff
+    defaults: { _controller: CharlotteStaffBundle:Role:stafflist }
+    requirements:
+        methods:  GET|POST
+
+CharlotteStaffBundle_role_staff_removegroup:
+    path:  /role/staff/removegroup
+    defaults: { _controller: CharlotteStaffBundle:Role:removegroup }
+    requirements:
+        methods:  POST
+
+
+CharlotteStaffBundle_role_staff_edit:
+    path:  /role/staff/edit
+    defaults: { _controller: CharlotteStaffBundle:Role:editstaff }
+    requirements:
+        methods:  POST
+
+CharlotteStaffBundle_team:
+    path:  /team
+    defaults: { _controller: CharlotteStaffBundle:Team:index }
+    requirements:
+        methods:  GET|POST
+
+CharlotteStaffBundle_team_update:
+    path:  /team/valid
+    defaults: { _controller: CharlotteStaffBundle:Team:update }
+    requirements:
+        methods:  GET|POST
+
+CharlotteStaffBundle_team_resetall:
+    path:  /team/resetall
+    defaults: { _controller: CharlotteStaffBundle:Team:resetAll }
+    requirements:
+        methods:  POST

@@ -1,0 +1,16 @@
+{% extends 'CharlotteStaffBundle::layout.html.twig' %}
+
+{% trans_default_domain 'CharlotteStaffBundle' %}
+
+{% block content %}
+
+    <div class="bs-callout bs-callout-info">
+        <h3>Choisissez un utilisateur à modifier</h3>
+        {{ form_start(StaffListForm) }}
+        {{ form_errors(StaffListForm) }}
+            {{ form_rest(StaffListForm) }}
+            <button type="submit" class="btn btn-default">Ok</button>
+        {{ form_end(StaffListForm) }}
+    </div>
+
+{% endblock %}

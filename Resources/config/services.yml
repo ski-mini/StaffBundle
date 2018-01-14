@@ -1,0 +1,8 @@
+parameters:
+#    charlotte_user.example.class: Charlotte\UserBundle\Example
+
+services:
+    charlotte_staff.rolesdescription:
+        class: Charlotte\StaffBundle\Services\Rolesdescription
+        calls:
+         - [setEntityManager, ["@doctrine.orm.entity_manager"]]
